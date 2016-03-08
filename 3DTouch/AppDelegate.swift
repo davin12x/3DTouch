@@ -16,6 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let messages = "Kitty"
+        if let shortcutItems = application.shortcutItems where shortcutItems.isEmpty{
+            let dynamicShortcut = UIMutableApplicationShortcutItem(type: "Hookup", localizedTitle: "Hookup", localizedSubtitle: "This Is hookup \(messages)", icon: UIApplicationShortcutIcon(templateImageName: "heart"), userInfo: nil)
+            application.shortcutItems = [dynamicShortcut]
+        }
         return true
     }
 
@@ -39,6 +45,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+         if let view = self.window?.rootViewController as? UITabBarController{
+            if shortcutItem.type == "Search"{
+                view.selectedIndex = 0
+            }
+            else if shortcutItem.type == "Hookup"{
+                view.selectedIndex = 1
+            }
+        }
     }
 
 
